@@ -1,6 +1,6 @@
-# [Project name]
+# JOBGUARD NG
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+JOBGUARD NG helps Nigerian young people assess suspicious job, scholarship, grant, fellowship, and recruitment offers before sharing money or sensitive information.
 
 ## Run & Operate
 
@@ -22,23 +22,30 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/jobguard-ng/src/App.tsx` — responsive checker, results, report flow, and opportunity directory
+- `artifacts/jobguard-ng/src/index.css` — JOBGUARD NG visual tokens, motion, and responsive utility styles
+- `lib/api-spec/openapi.yaml` — source of truth for API contracts
+- `artifacts/api-server/src/lib/risk-engine.ts` — configurable, explainable risk rules and extraction
+- `lib/db/src/schema/opportunities.ts` and `lib/db/src/schema/reports.ts` — persisted opportunity and report models
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The first MVP uses deterministic weighted rules rather than an opaque AI verdict so each risk signal can be explained to a user.
+- Opportunity data and private reports use the shared PostgreSQL database; seeded opportunity records are explicitly marked as demo or source-provided.
+- Screenshot uploads intentionally fall back to manual text entry when OCR is unavailable instead of pretending to extract text.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Users can paste a message or link, run a risk assessment, inspect signals and extracted details, submit a private suspicious-offer report, and browse/filter seeded opportunities.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+None recorded.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- The artifact workflow supplies `PORT` and `BASE_PATH`; use the managed workflow for the live preview.
+- After changing the OpenAPI spec, run `pnpm --filter @workspace/api-spec run codegen`.
 
 ## Pointers
 

@@ -1,0 +1,651 @@
+Build a polished hackathon-ready web application called "JOBGUARD NG".
+
+PRODUCT PURPOSE
+JOBGUARD NG helps Nigerian young people evaluate suspicious job, internship, scholarship, grant, fellowship, and recruitment opportunities before they send money or sensitive information.
+
+Core message:
+"Before you chase the opportunity, check the opportunity."
+
+The product should feel like a real Nigerian startup MVP, not a generic AI demo.
+
+IMPORTANT:
+This is an MVP for a hackathon. Prioritize:
+1. A working end-to-end experience
+2. Excellent UX
+3. Explainable results
+4. Nigerian context
+5. Fast performance
+6. Mobile responsiveness
+7. A compelling live demo
+
+Do NOT add authentication, payments, admin dashboards, complicated account systems, or unnecessary features unless they are required for the core experience.
+
+TECHNICAL DIRECTION
+Use a modern full-stack web architecture that works reliably on Replit.
+Prefer:
+- React
+- TypeScript
+- Tailwind CSS
+- A simple backend/API
+- SQLite or another simple Replit-compatible database if persistence is needed
+
+Keep the code modular and easy to modify.
+
+The application must run correctly with one Replit Run command.
+
+==================================================
+1. LANDING PAGE
+==================================================
+
+Create a clean, modern landing page.
+
+Hero section:
+
+JOBGUARD NG
+
+"Before you chase the opportunity, check the opportunity."
+
+Supporting text:
+
+"Check jobs, internships, scholarships, grants and recruitment offers for common scam and fraud warning signs before you send money or personal information."
+
+Primary CTA:
+
+"Check an Opportunity"
+
+Secondary CTA:
+
+"Browse Verified Opportunities"
+
+Add a small trust/safety statement:
+
+"JOBGUARD provides a risk assessment, not a guarantee. Always verify important opportunities through official sources."
+
+Use a Nigerian youth-focused visual identity without using stereotypical or excessive Nigerian imagery.
+
+The design should be professional enough to look like a real startup.
+
+==================================================
+2. MAIN CHECKER EXPERIENCE
+==================================================
+
+The most important feature is the Opportunity Checker.
+
+Create a prominent section titled:
+
+"Check an Opportunity"
+
+Give users three ways to submit an opportunity:
+
+TAB 1:
+"Paste Message"
+
+Allow the user to paste a WhatsApp message, SMS, email, or job advertisement.
+
+Example placeholder:
+
+"Paste the opportunity message here..."
+
+TAB 2:
+"Paste Link"
+
+Allow the user to enter a URL.
+
+TAB 3:
+"Upload Screenshot"
+
+Allow image upload.
+
+For the screenshot MVP, extract visible text using OCR if practical.
+If OCR is not reliable in the current environment, gracefully explain that screenshot analysis is available as an MVP feature and provide a fallback rather than breaking the application.
+
+Include a prominent button:
+
+"Analyze Opportunity"
+
+Also include a small example button:
+
+"Try a Demo Scam"
+
+This should populate a realistic Nigerian scam example so judges can instantly experience the product.
+
+==================================================
+3. RISK ANALYSIS ENGINE
+==================================================
+
+Do NOT make the product simply return:
+
+"AI says this is a scam."
+
+Create an explainable risk scoring system from 0–100.
+
+The analysis should look for signals such as:
+
+- Payment or registration fees
+- Requests for bank transfers
+- Requests for cryptocurrency
+- Requests for BVN
+- Requests for NIN
+- Requests for OTPs
+- Requests for passwords
+- Requests for unusual personal information
+- Artificial urgency
+- "Guaranteed job" language
+- "Pay to secure your slot" language
+- Suspicious contact methods
+- Personal email addresses for supposedly official organizations
+- Suspicious or mismatched URLs
+- Poorly structured recruitment claims
+- Unrealistic salary promises
+- Requests to move immediately to Telegram or WhatsApp
+- Missing organization information
+- Lack of official application instructions
+
+Use weighted rules to calculate a transparent score.
+
+Example:
+
+Payment requested: +25
+Sensitive information requested: +20
+Suspicious contact method: +15
+Artificial urgency: +10
+Unverified source: +15
+Unrealistic promise: +10
+Suspicious URL: +5
+
+The weights should be configurable in one place in the code.
+
+Do not claim that the score is scientifically accurate.
+
+==================================================
+4. RESULTS SCREEN
+==================================================
+
+After analysis, show a visually strong results screen.
+
+At the top display:
+
+"Opportunity Risk Assessment"
+
+Then show a large circular or horizontal risk meter.
+
+Example:
+
+87 / 100
+
+HIGH RISK
+
+Use these categories:
+
+0–30:
+LOW RISK
+
+31–60:
+PROCEED WITH CAUTION
+
+61–80:
+HIGH RISK
+
+81–100:
+VERY HIGH RISK
+
+Do not call any opportunity "100% scam".
+
+Instead use language such as:
+
+"High risk based on the signals detected."
+
+Under the score display:
+
+"Why we flagged this"
+
+Show individual warning cards.
+
+Example:
+
+RED FLAG
+"Payment requested"
+
+"Legitimate recruitment opportunities generally should not require applicants to pay to secure a position."
+
+RED FLAG
+"Urgency language"
+
+"The message pressures the applicant to pay immediately or lose the opportunity."
+
+WARNING
+"Unverified source"
+
+"The organization or opportunity could not be confirmed using the information provided."
+
+Each detected signal should show:
+- severity
+- title
+- short explanation
+
+==================================================
+5. ACTION RECOMMENDATION
+==================================================
+
+Below the risk analysis, show a clear recommendation.
+
+For high-risk opportunities:
+
+"Recommended action"
+
+DO NOT SEND MONEY
+
+DO NOT SHARE YOUR BVN, NIN OR OTP
+
+VERIFY THROUGH THE ORGANIZATION'S OFFICIAL CHANNEL
+
+For medium-risk opportunities:
+
+"Proceed carefully"
+
+For low-risk opportunities:
+
+"No major warning signs detected, but verify the opportunity through the organization's official source before sharing sensitive information."
+
+This section must be highly visible.
+
+==================================================
+6. OPPORTUNITY SUMMARY
+==================================================
+
+Extract and display useful information from the submitted opportunity when possible:
+
+Organization
+Opportunity type
+Location
+Deadline
+Contact method
+Payment requested
+Website/link
+
+If information is unavailable, display:
+
+"Not detected"
+
+Do not invent missing information.
+
+==================================================
+7. VERIFIED OPPORTUNITIES
+==================================================
+
+Create a second major section called:
+
+"Verified Opportunities"
+
+The purpose is important:
+
+JOBGUARD should not only tell young people what NOT to do.
+
+It should help them find legitimate alternatives.
+
+Create opportunity cards containing:
+
+- Opportunity title
+- Organization
+- Category
+- Location / Remote
+- Deadline
+- Short description
+- Official application link
+- Verification status
+
+Categories:
+
+Jobs
+Internships
+Scholarships
+Grants
+Fellowships
+Recruitment
+
+Use clearly labeled DEMO/SEEDED DATA for the hackathon.
+
+Do not falsely claim that seeded opportunities have been independently verified if they have not actually been checked.
+
+Use a field such as:
+
+"Source status: Official source provided"
+
+or
+
+"Demo opportunity"
+
+depending on the data.
+
+Make it very easy for the user to filter opportunities.
+
+==================================================
+8. SCAM REPORTING
+==================================================
+
+Add a simple section:
+
+"Report a Suspicious Opportunity"
+
+Allow a user to submit:
+
+- Opportunity name
+- Organization name
+- Message/details
+- URL
+- What happened?
+
+Include:
+
+"Submit Report"
+
+For the MVP, store reports locally/in the database.
+
+After submission show:
+
+"Thank you. Your report can help protect other job seekers."
+
+Do not expose personal information publicly.
+
+==================================================
+9. DEMO EXPERIENCE
+==================================================
+
+The hackathon demo is extremely important.
+
+Create a "Try Demo" experience.
+
+Provide at least THREE realistic seeded examples:
+
+DEMO 1:
+A fake government recruitment message asking applicants to pay a processing fee.
+
+DEMO 2:
+A fake remote job promising unusually high earnings and requesting an upfront payment.
+
+DEMO 3:
+A legitimate-looking opportunity with few or no obvious warning signals.
+
+When the judge clicks a demo:
+
+1. Populate the checker
+2. Analyze it
+3. Show the score
+4. Show detected red flags
+5. Show recommended actions
+
+Make this flow extremely fast.
+
+The judge should be able to understand the product in less than 30 seconds.
+
+==================================================
+10. NIGERIAN CONTEXT
+==================================================
+
+Make the product clearly designed for Nigeria.
+
+Use examples involving:
+
+- Nigerian youth
+- university graduates
+- NYSC-related opportunities
+- internships
+- government recruitment
+- scholarships
+- grants
+- remote jobs
+- WhatsApp-based recruitment scams
+
+Use Nigerian naira formatting where money appears.
+
+Example:
+
+₦7,500
+
+Do not stereotype users.
+
+Use clear Nigerian English.
+
+==================================================
+11. DESIGN
+==================================================
+
+Design principles:
+
+- Modern
+- Minimal
+- Trustworthy
+- Mobile-first
+- Accessible
+- Fast
+- Clear hierarchy
+- Strong typography
+- Generous spacing
+- Professional cards
+- Subtle animations
+- Clear success/warning/error states
+
+Avoid:
+- excessive gradients
+- clutter
+- excessive animations
+- generic AI robot graphics
+- unnecessary dashboards
+- huge amounts of text
+
+The risk result should be the visual centerpiece.
+
+Use a restrained color system where:
+green = lower risk
+yellow/orange = caution
+red = high risk
+neutral colors = general UI
+
+Make sure color is not the only indicator; always include text labels.
+
+==================================================
+12. NAVIGATION
+==================================================
+
+Keep navigation simple:
+
+JOBGUARD NG
+
+Check Opportunity
+Verified Opportunities
+Report Scam
+How It Works
+
+On mobile, use a compact navigation menu.
+
+==================================================
+13. HOW IT WORKS
+==================================================
+
+Add a simple 3-step explanation:
+
+1. PASTE
+Paste a job, scholarship, grant, or recruitment message.
+
+2. CHECK
+JOBGUARD analyzes common fraud warning signs.
+
+3. PROTECT
+Understand the risks and verify before sending money or personal information.
+
+==================================================
+14. SAFETY / TRUST
+==================================================
+
+Add a small footer disclaimer:
+
+"JOBGUARD is an educational risk-assessment tool. A low-risk result does not guarantee that an opportunity is legitimate. Always verify important opportunities through the organization's official website or known official channels."
+
+Never tell users that an opportunity is definitely legitimate unless the application has actual verified source data.
+
+Never encourage users to submit sensitive information.
+
+==================================================
+15. RESPONSIVE DESIGN
+==================================================
+
+The entire application must work beautifully on:
+
+- mobile phones
+- tablets
+- laptops
+- desktop screens
+
+The primary user is likely to access suspicious opportunities through a phone, so mobile UX is especially important.
+
+Buttons should be large enough to tap easily.
+
+==================================================
+16. EMPTY / ERROR STATES
+==================================================
+
+Handle all common states gracefully.
+
+Examples:
+
+No text entered:
+"Paste an opportunity first."
+
+Invalid URL:
+"Please enter a valid link."
+
+Analysis failure:
+"We couldn't analyze this opportunity. Try pasting the message instead."
+
+No opportunities:
+"No opportunities found."
+
+Screenshot OCR failure:
+"We couldn't read the screenshot clearly. Please paste the text manually."
+
+Never show raw technical errors to users.
+
+==================================================
+17. PERFORMANCE
+==================================================
+
+Keep the application fast.
+
+Do not load unnecessary libraries.
+
+Avoid expensive operations on every keystroke.
+
+Only run analysis when the user clicks "Analyze Opportunity".
+
+Use loading states such as:
+
+"Analyzing opportunity..."
+
+Then:
+
+"Checking for warning signs..."
+
+Then show the result.
+
+==================================================
+18. DATA MODEL
+==================================================
+
+Create simple models for:
+
+Opportunity
+- id
+- title
+- organization
+- category
+- description
+- location
+- deadline
+- url
+- sourceStatus
+- demo
+
+Report
+- id
+- opportunityName
+- organization
+- details
+- url
+- createdAt
+
+Analysis
+- riskScore
+- riskLevel
+- detectedSignals
+- recommendation
+- extractedInformation
+
+Keep the structure simple and easy to extend.
+
+==================================================
+19. CODE QUALITY
+==================================================
+
+Organize the application into reusable components.
+
+For example:
+
+Navbar
+Hero
+OpportunityChecker
+InputTabs
+AnalysisLoading
+RiskScore
+RiskSignalCard
+RecommendationCard
+OpportunityCard
+OpportunityFilters
+ReportForm
+Footer
+
+Keep business logic separate from UI components.
+
+Put risk scoring rules in a dedicated service/module.
+
+Add comments where the reasoning behind the risk score may not be obvious.
+
+==================================================
+20. IMPORTANT HACKATHON REQUIREMENT
+==================================================
+
+The application must be FULLY FUNCTIONAL with seeded demo data.
+
+Do not create fake buttons that do nothing.
+
+Every major button should perform an action.
+
+The core demo must work:
+
+Landing page
+→ Check Opportunity
+→ paste demo message
+→ Analyze
+→ risk score
+→ explanation
+→ recommendation
+→ browse verified/demo opportunities
+
+This end-to-end flow is more important than adding lots of features.
+
+==================================================
+FINAL PRIORITY
+==================================================
+
+If you have to choose between more features and a reliable product:
+
+CHOOSE RELIABILITY.
+
+If you have to choose between visual complexity and clarity:
+
+CHOOSE CLARITY.
+
+If you have to choose between an impressive AI claim and explainable risk analysis:
+
+CHOOSE EXPLAINABILITY.
+
+Build the MVP now and make sure it runs successfully on Replit before adding optional enhancements.

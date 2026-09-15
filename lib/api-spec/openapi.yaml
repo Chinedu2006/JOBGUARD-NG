@@ -3,13 +3,19 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: JOBGUARD NG opportunity safety API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: opportunities
+    description: Verified and demo opportunities
+  - name: analysis
+    description: Explainable opportunity risk analysis
+  - name: reports
+    description: Suspicious opportunity reports
 paths:
   /healthz:
     get:
@@ -24,6 +30,91 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /opportunities:
+    get:
+      operationId: listOpportunities
+      tags: [opportunities]
+      summary: List opportunities
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Opportunity list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Opportunity"
+  /opportunities/summary:
+    get:
+      operationId: getOpportunitySummary
+      tags: [opportunities]
+      summary: Get opportunity directory summary
+      responses:
+        "200":
+          description: Opportunity counts by category
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpportunitySummary"
+  /analysis:
+    post:
+      operationId: analyzeOpportunity
+      tags: [analysis]
+      summary: Analyze an opportunity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalysisInput"
+      responses:
+        "200":
+          description: Explainable risk analysis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Analysis"
+        "400":
+          description: Invalid analysis input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /reports:
+    post:
+      operationId: createReport
+      tags: [reports]
+      summary: Submit a suspicious opportunity report
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportInput"
+      responses:
+        "201":
+          description: Report received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Report"
+        "400":
+          description: Invalid report input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +124,172 @@ components:
           type: string
       required:
         - status
-
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+    Opportunity:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        organization:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        deadline:
+          type: string
+        url:
+          type: string
+        sourceStatus:
+          type: string
+        demo:
+          type: boolean
+      required:
+        - id
+        - title
+        - organization
+        - category
+        - description
+        - location
+        - deadline
+        - url
+        - sourceStatus
+        - demo
+    OpportunitySummary:
+      type: object
+      properties:
+        total:
+          type: integer
+        categories:
+          type: object
+          additionalProperties:
+            type: integer
+      required:
+        - total
+        - categories
+    AnalysisInput:
+      type: object
+      properties:
+        text:
+          type: string
+        url:
+          type: string
+      required:
+        - text
+    DetectedSignal:
+      type: object
+      properties:
+        severity:
+          type: string
+          enum: [red-flag, warning, positive]
+        title:
+          type: string
+        explanation:
+          type: string
+        score:
+          type: integer
+      required:
+        - severity
+        - title
+        - explanation
+        - score
+    ExtractedInformation:
+      type: object
+      properties:
+        organization:
+          type: ["string", "null"]
+        opportunityType:
+          type: ["string", "null"]
+        location:
+          type: ["string", "null"]
+        deadline:
+          type: ["string", "null"]
+        contactMethod:
+          type: ["string", "null"]
+        paymentRequested:
+          type: ["string", "null"]
+        website:
+          type: ["string", "null"]
+      required:
+        - organization
+        - opportunityType
+        - location
+        - deadline
+        - contactMethod
+        - paymentRequested
+        - website
+    Analysis:
+      type: object
+      properties:
+        riskScore:
+          type: integer
+        riskLevel:
+          type: string
+          enum: [low, caution, high, very-high]
+        detectedSignals:
+          type: array
+          items:
+            $ref: "#/components/schemas/DetectedSignal"
+        recommendation:
+          type: string
+        extractedInformation:
+          $ref: "#/components/schemas/ExtractedInformation"
+      required:
+        - riskScore
+        - riskLevel
+        - detectedSignals
+        - recommendation
+        - extractedInformation
+    ReportInput:
+      type: object
+      properties:
+        opportunityName:
+          type: string
+        organization:
+          type: string
+        details:
+          type: string
+        url:
+          type: string
+        outcome:
+          type: string
+      required:
+        - opportunityName
+        - organization
+        - details
+        - outcome
+    Report:
+      type: object
+      properties:
+        id:
+          type: integer
+        opportunityName:
+          type: string
+        organization:
+          type: string
+        details:
+          type: string
+        url:
+          type: ["string", "null"]
+        outcome:
+          type: string
+        createdAt:
+          type: string
+      required:
+        - id
+        - opportunityName
+        - organization
+        - details
+        - url
+        - outcome
+        - createdAt

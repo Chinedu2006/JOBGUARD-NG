@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "JOBGUARD NG"
+description = "A Nigerian opportunity safety checker that helps young people assess suspicious jobs, scholarships, grants, fellowships, and recruitment offers before they send money or sensitive information."
+version = "1.0.0"
+id = "artifacts/jobguard-ng"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20302
+
+[services.development]
+run = "pnpm --filter @workspace/jobguard-ng run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/jobguard-ng", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/jobguard-ng/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20302"
+BASE_PATH = "/"
